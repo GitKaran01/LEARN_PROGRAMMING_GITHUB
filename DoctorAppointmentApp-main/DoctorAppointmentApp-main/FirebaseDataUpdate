@@ -1,0 +1,184 @@
+// This is working code but only we can update data in code and only one data
+
+import 'dart:developer';
+
+import 'package:doctorappoint/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// chat gpt
+// final TextEditingController emailController = TextEditingController();
+// final TextEditingController nameController = TextEditingController();
+// final TextEditingController numerController = TextEditingController();
+
+void main()  async{
+
+  // 2nd time code
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  final FirebaseFirestore db = FirebaseFirestore.instance;
+  final CollectionReference users = db.collection('User ID');
+
+  // 3rd time code
+  final Map<String, dynamic> userFields = {
+    // 'Email': emailController.text,
+    // 'Name': nameController.text,
+    // 'Number': numerController.text,
+
+
+
+
+
+
+  //  2nd time code final Map<String,dynamic> userFields = {
+    'Email':'newUse34redfgmail.com',
+    'Name' : 'newUser',
+    'Number' :'12dfd345'
+
+
+  //   'Email':'hksahu1143@gmail.com',
+  //   'Name' : 'Hitesh Sahu',
+  //   'Number' :'1234567890'
+  };
+
+
+
+  // 2nd time code
+  await users.doc('runtime').set(userFields);
+
+  // 3rd time code
+  // final DocumentSnapshot snapshot = await users.doc('runtime').get();
+  // final data = snapshot.data();
+  // print(data.toString());
+
+
+
+  // extra
+  // final DocumentSnapshot snapshot = await users.doc('runtime').get();
+  // final userFields = snapshot.data();
+  // log(userFields.toString());
+
+
+
+  runApp(MyApp());
+}
+
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  // 2nd  time code
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController numerController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('User Details')),
+      body: Column(
+        children: [
+          TextField(controller: emailController, decoration: InputDecoration(labelText: 'Email')),
+          TextField(controller: nameController, decoration: InputDecoration(labelText: 'Name')),
+          TextField(controller: numerController, decoration: InputDecoration(labelText: 'Numer')),
+
+
+
+
+
+        ElevatedButton(
+            onPressed: () {
+
+              // Implement the Firestore create operation here
+              // Add data to the "User ID" collection
+            },
+            child: Text('Update'),
+          ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance.collection('User ID').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return CircularProgressIndicator();
+              final users = snapshot.data!.docs;
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    final user = users[index];
+                    return ListTile(
+                      title: Text(user['Name']),
+                      subtitle: Text(user['Email']),
+
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              // Implement the update operation
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              // Implement the delete operation
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+
+
+
+        ],
+
+
+      ),
+
+
+    );
+  }
+}
+
+
+// chat gpt
+// Future<void> uploadData() async {
+//   final FirebaseFirestore db = FirebaseFirestore.instance;
+//   final CollectionReference users = db.collection('User ID');
+//
+//   final Map<String, dynamic> userFields = {
+//     'Email': emailController.text,
+//     'Name': nameController.text,
+//     'Number': numerController.text,
+//   };
+//
+//   await users.doc('runtime').set(userFields);
+//
+//   // Optionally, you can fetch and print the updated data
+//   final DocumentSnapshot snapshot = await users.doc('runtime').get();
+//   final data = snapshot.data();
+//   print(data.toString());
+// }
